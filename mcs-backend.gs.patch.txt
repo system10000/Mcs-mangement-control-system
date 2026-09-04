@@ -1,0 +1,20 @@
+Changes to make in your Apps Script file:
+
+1. In HEADERS.Meetings, add "scheduled_days":
+
+  Meetings: [
+    "id", "name", "type", "date", "start_date", "end_date", "plant", "plant_id",
+    "project", "project_id", "facilitator", "attendees", "status",
+    "completed_sessions", "live_draft", "guidelines", "scheduled_days", "is_active"
+  ],
+
+2. In hydrateRecord_(), add "scheduled_days" to the list of keys that get
+   JSON/CSV parsed back into arrays:
+
+  ["revision_history", "messages", "completed_sessions", "live_draft", "attendees", "instructions", "priorities", "scheduled_days"].forEach(...)
+
+3. If you already ran setupSheets() before, the live "Meetings" sheet won't
+   pick up the new column automatically (setupSheets() only rewrites headers
+   when column A's header doesn't match). Add the "scheduled_days" column by
+   hand to the existing sheet (or wipe/re-run setup on a fresh sheet), so
+   appendObject()/updateOneRaw_() have somewhere to write it.
